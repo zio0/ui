@@ -2573,15 +2573,12 @@ function menu.Initialize(menutable)
 
 	function menu:InputBeganMenu(key) --ANCHOR menu input
 local toggleOpt = menu.options["Settings"] and menu.options["Settings"]["Cheat Settings"] and menu.options["Settings"]["Cheat Settings"]["Menu Toggle Key"]
-local currentKey = ToggleKey 
-
-if toggleOpt and toggleOpt[5] and toggleOpt[5][1] then 
-    currentKey = toggleOpt[5][1] 
+local currentKey = ToggleKey
+if toggleOpt and toggleOpt[5] and toggleOpt[5][1] then
+currentKey = toggleOpt[5][1]
 end
-
 if key.KeyCode == currentKey and not loadingthing.Visible then
-
-if key.KeyCode == currentKey and not loadingthing.Visible then
+cp.dragging_m = false
 			cp.dragging_m = false
 			cp.dragging_r = false
 			cp.dragging_b = false
