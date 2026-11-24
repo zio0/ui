@@ -5002,6 +5002,7 @@ function Library:AddTab(tabName)
 end
 
 -- Lib:Show() draws the menu (the Settings tab is added for you).
+-- Lib:Show() draws the menu (the Settings tab is added for you).
 function Library:Show()
     local ok, err = pcall(Library.Load, self._tabs)
     if not ok then
