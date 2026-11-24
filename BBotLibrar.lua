@@ -5003,33 +5003,40 @@ end
 
 -- Lib:Show() draws the menu (the Settings tab is added for you).
 function Library:Show()
-	local ok, err = pcall(Library.Load, self._tabs)
-	if not ok then
-		-- building failed: don't leave a half-drawn, dead menu on screen
-		pcall(function() if NotifConnection then NotifConnection:Disconnect() end end)
-		if menu then pcall(function() for _, c in pairs(menu.connections) do if type(c) == "function" then c() else c:Disconnect() end end end) end
-		pcall(function() game:GetService("ContextActionService"):UnbindAction("BB Keycheck") end)
-		KillAllDrawings()
-		warn("[BitchBot UI] Menu failed to build: " .. tostring(err))
-		error("[BitchBot UI] Menu failed to build: " .. tostring(err), 0)
-	end
-
-	-- one shared loop keeps every player list fresh (disconnected automatically on unload)
-	if #Library._playerLists > 0 then
-		for _, pl in ipairs(Library._playerLists) do pcall(pl.refresh) end
-		menu.connections.playerlists = game:GetService("RunService").Heartbeat:Connect(function(dt)
-			if menu.unloaded then return end
-			for _, pl in ipairs(Library._playerLists) do
-				pl.acc = pl.acc + dt
-				if pl.acc >= pl.interval then
-					pl.acc = 0
-					local ok, e = pcall(pl.refresh)
-					if not ok then warn("[BitchBot UI] player list error: " .. tostring(e)) end
-				end
-			end
-		end)
-	end
-	return Library
+    local ok, err = pcall(Library.Load, self._tabs)
+    if not ok then
+        -- building failed: don't leave a half-drawn, dead menu on screen
+        pcall(function() if NotifConnection then NotifConnection:Disconnect() end end)
+        if menu then 
+            pcall(function() 
+                for _, c in pairs(menu.connections) do 
+                    if type(c) == "function" then c() else c:Disconnect() end 
+                end 
+            end) 
+        end
+        pcall(function() game:GetService("ContextActionService"):UnbindAction("BB Keycheck") end)
+        KillAllDrawings()
+        warn("[BitchBot UI] Menu failed to build: " .. tostring(err))
+        error("[BitchBot UI] Menu failed to build: " .. tostring(err), 0)
+    end
+    
+    -- one shared loop keeps every player list fresh (disconnected automatically on unload)
+    if #Library._playerLists > 0 then
+        for _, pl in ipairs(Library._playerLists) do pcall(pl.refresh) end
+        menu.connections.playerlists = game:GetService("RunService").Heartbeat:Connect(function(dt)
+            if menu.unloaded then return end
+            for _, pl in ipairs(Library._playerLists) do
+                pl.acc = pl.acc + dt
+                if pl.acc >= pl.interval then
+                    pl.acc = 0
+                    local ok, e = pcall(pl.refresh)
+                    if not ok then warn("[BitchBot UI] player list error: " .. tostring(e)) end
+                end
+            end
+        end)
+    end
+    
+    return Library
 end
 
 local genv = (getgenv and getgenv()) or _G
