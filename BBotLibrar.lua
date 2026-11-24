@@ -2005,7 +2005,7 @@ function menu.Initialize(menutable)
 	end
 
 	setActiveTab(menu.activetab)
-
+    end
 	local plusminus = {}
 
 	Draw:OutlinedText("_", 1, false, 10, 10, 14, false, { 225, 225, 225, 255 }, { 20, 20, 20 }, plusminus)
