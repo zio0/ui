@@ -4367,11 +4367,13 @@ if key.KeyCode == currentKey and not loadingthing.Visible then
 				) and not menu.dontdrag
 			then
 				if menu.mousedown then
-					if not menu.dragging then
-						clickspot_x = LOCAL_MOUSE.x
-						clickspot_y = LOCAL_MOUSE.y - 36 original_menu_X = menu.x original_menu_y = menu.y
-						menu.dragging = true
-					end
+if not menu.dragging then
+    clickspot_x = LOCAL_MOUSE.x
+    clickspot_y = LOCAL_MOUSE.y - 36
+    original_menu_X = menu.x
+    original_menu_y = menu.y
+    menu.dragging = true
+end
 					menu.x = (original_menu_X - clickspot_x) + LOCAL_MOUSE.x
 					menu.y = (original_menu_y - clickspot_y) + LOCAL_MOUSE.y - 36
 					if menu.y < 0 then
@@ -4662,6 +4664,16 @@ local SETTINGS_TAB = {
 							color = { 127, 72, 163 },
 						},
 					},
+                    {
+                type = "toggle",
+                name = "Menu Toggle Key",
+                value = true,
+                extra = {
+                type = "keybind",
+                key = Enum.KeyCode.LeftAlt,
+                toggletype = 1,
+                        },
+                    },
 					{
 						type = "toggle",
 						name = "Watermark",
